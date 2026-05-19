@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,9 @@ public class TramController : MonoBehaviour
     [SerializeField] private float _maxSpeed = 100f;
     [SerializeField] private float _minRotateRailDistance = 0.5f;
     [SerializeField] private List<Transform> _railPoints = new List<Transform>();
+
+    [Header("UI")]
+    [SerializeField] private TMP_Text _speedText;
 
     [Header("Inputs")]
     [SerializeField] private InputActionReference _moveInput;
@@ -44,6 +48,7 @@ public class TramController : MonoBehaviour
 
         _currentSpeed = Math.Clamp(_currentSpeed, 0, _maxSpeed);
         transform.position += _moveDirection * _currentSpeed * Time.deltaTime;
+        _speedText.text = "Speed: " + (int)_currentSpeed;
     }
 
     void RotateRail()
