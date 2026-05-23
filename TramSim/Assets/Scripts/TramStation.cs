@@ -52,6 +52,7 @@ public class TramStation : MonoBehaviour
             _isWaiting = false;
             _currentWaitTime = 0f;
             _waitTimeText.gameObject.SetActive(false);
+            GameManager._instance.AddCoins(100);
         }
         else
         {

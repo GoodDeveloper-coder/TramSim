@@ -24,7 +24,7 @@ public class TimeManager : MonoBehaviour
 
     void UpdateTime()
     {
-        _seconds += Time.deltaTime * 10000;
+        _seconds += Time.deltaTime * 100;
         if (_seconds >= 60f)
         {
             _seconds = 0f;
