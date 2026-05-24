@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField] private int _startDayTime = 6;
+    [SerializeField] private int _finishDayTime = 18;
     public int _days { get; private set; }
     public int _hours { get; private set; }
     public int _minutes { get; private set; }
@@ -14,7 +17,7 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-
+        _hours = _startDayTime;
     }
 
     void Update()
@@ -31,9 +34,9 @@ public class TimeManager : MonoBehaviour
             if (++_minutes >= 60)
             {
                 _minutes = 0;
-                if (++_hours >= 24)
+                if (++_hours >= _finishDayTime)
                 {
-                    _hours = 0;
+                    _hours = _startDayTime;
                     _days++;
                 }
             }
