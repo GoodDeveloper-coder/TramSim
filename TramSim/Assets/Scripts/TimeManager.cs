@@ -14,6 +14,8 @@ public class TimeManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text _dayText;
     [SerializeField] private TMP_Text _timeText;
+    private bool _nextDay = false;
+    private bool _waitForNextDay = false;
 
     void Start()
     {
@@ -27,7 +29,9 @@ public class TimeManager : MonoBehaviour
 
     void UpdateTime()
     {
-        _seconds += Time.deltaTime * 100;
+        if (!_waitForNextDay)
+            _seconds += Time.deltaTime * 100;
+
         if (_seconds >= 60f)
         {
             _seconds = 0f;
@@ -36,13 +40,31 @@ public class TimeManager : MonoBehaviour
                 _minutes = 0;
                 if (++_hours >= _finishDayTime)
                 {
-                    _hours = _startDayTime;
-                    _days++;
+                    _waitForNextDay = true;
+                    if (_nextDay)
+                    {
+                        _hours = _startDayTime;
+                        _days++;
+                    }
+                }
+                else
+                {
+                    _nextDay = false;
                 }
             }
         }
 
         _dayText.text = "Day: " + _days;
         _timeText.text = "Time: " + _hours + ":" + _minutes;
+    }
+
+    public void NextDay()
+    {
+        _nextDay = true;
+        _waitForNextDay = false;
+        _days++;
+        _seconds = 0f;
+        _minutes = 0;
+        _hours = _startDayTime;
     }
 }
