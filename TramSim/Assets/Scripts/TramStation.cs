@@ -57,7 +57,10 @@ public class TramStation : MonoBehaviour
         else
         {
             _currentWaitTime += Time.deltaTime;
-            _waitTimeText.text = string.Format("{0:#.0}", _currentWaitTime);
+            string waitTimeText = string.Format("{0:#.0}", _currentWaitTime);
+            if (_currentWaitTime < 1f)
+                waitTimeText = "0" + waitTimeText;
+            _waitTimeText.text = waitTimeText;
         }
     }
 }

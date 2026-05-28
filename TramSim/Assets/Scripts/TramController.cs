@@ -43,7 +43,7 @@ public class TramController : MonoBehaviour
         }
         else
         {
-            _currentSpeed -= _speed * Time.deltaTime / 3;
+            _currentSpeed -= _speed * Time.deltaTime / 5;
         }
 
         _currentSpeed = Math.Clamp(_currentSpeed, 0, _maxSpeed);
