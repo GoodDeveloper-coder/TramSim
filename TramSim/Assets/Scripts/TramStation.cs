@@ -6,7 +6,7 @@ public class TramStation : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float _minDistance = 30f;
     [SerializeField] private float _waitTime = 10f;
-    [SerializeField] private Transform _tram;
+    [SerializeField] private TramController _tram;
 
     [Header("UI")]
     [SerializeField] private TMP_Text _waitTimeText;
@@ -21,8 +21,12 @@ public class TramStation : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(_tram.position, transform.position) <= _minDistance)
+        if (_nextStation)
+            return;
+            
+        if (Vector3.Distance(_tram.transform.position, transform.position) <= _minDistance)
         {
+
             if (!_isWaiting)
             {
                 _isWaiting = true;
@@ -34,7 +38,10 @@ public class TramStation : MonoBehaviour
         else
         {
             if (_isWaiting)
+            {
+                _tram.SetCanOpenDoor(false);
                 _waitTimeText.gameObject.SetActive(false);
+            }
 
             _isWaiting = false;
             _currentWaitTime = 0f;
@@ -51,8 +58,8 @@ public class TramStation : MonoBehaviour
             _nextStation = true;
             _isWaiting = false;
             _currentWaitTime = 0f;
+            _tram.SetCanOpenDoor(true);
             _waitTimeText.gameObject.SetActive(false);
-            GameManager._instance.AddCoins(100);
         }
         else
         {
